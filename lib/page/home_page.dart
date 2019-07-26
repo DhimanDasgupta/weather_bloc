@@ -63,7 +63,7 @@ class WeatherPageChild extends StatelessWidget {
                 bloc: BlocProvider.of<WeatherBloc>(context),
                 builder: (context, WeatherState state) {
                   if (state is WeatherLoadingState) {
-                    return _buildLoading();
+                    return _buildLoading(context, state.cityName);
                   } else if (state is WeatherLoadedState) {
                     return _buildColumnWithData(state.weather);
                   }
@@ -83,9 +83,36 @@ class WeatherPageChild extends StatelessWidget {
     );
   }
 
-  Widget _buildLoading() {
+  Widget _buildLoading(final BuildContext context, final String cityName) {
     return Center(
-      child: CircularProgressIndicator(),
+      child: Column(
+        children: <Widget>[
+          CircularProgressIndicator(),
+          _buildLoadingMessage(context, cityName),
+          _buildInitialInput()
+        ],
+      ),
+    );
+  }
+
+  Widget _buildLoadingMessage(final BuildContext context, final String cityName) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: RichText(
+          text: TextSpan(
+            text: 'Loading weather of ',
+            style: DefaultTextStyle
+                    .of(context)
+                    .style,
+            children: <TextSpan>[
+              TextSpan(
+                      text: "$cityName",
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+            ],
+          ),
+        ),
+      ),
     );
   }
 

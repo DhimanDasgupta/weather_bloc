@@ -11,7 +11,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   @override
   Stream<WeatherState> mapEventToState(WeatherEvent event) async* {
     if (event is GetWeatherEvent) {
-      yield WeatherLoadingState();
+      yield WeatherLoadingState(event.cityName);
       final weather = await _getFakeWeather(event.cityName);
       yield WeatherLoadedState(weather);
     } else {

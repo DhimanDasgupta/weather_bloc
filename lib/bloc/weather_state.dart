@@ -9,7 +9,11 @@ abstract class WeatherState extends Equatable {
 
 class WeatherInitialState extends WeatherState {}
 
-class WeatherLoadingState extends WeatherState {}
+class WeatherLoadingState extends WeatherState {
+  final String cityName;
+
+  WeatherLoadingState(this.cityName) : super([cityName]);
+}
 
 class WeatherLoadedState extends WeatherState {
   final Weather weather;
