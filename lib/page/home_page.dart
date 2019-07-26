@@ -50,7 +50,7 @@ class WeatherPageChild extends StatelessWidget {
                 if (state is WeatherLoadedState) {
                   message = 'Retrived Weather for ${state.weather.cityName}';
                 } else if (state is WeatherLoadingState) {
-                  message = 'Loading Weather...';
+                    message = 'Loading Weather of ${state.cityName}';
                 }
 
                 if (message.length > 0) {
@@ -102,9 +102,9 @@ class WeatherPageChild extends StatelessWidget {
         child: RichText(
           text: TextSpan(
             text: 'Loading weather of ',
-            style: DefaultTextStyle
-                    .of(context)
-                    .style,
+              style: DefaultTextStyle
+                      .of(context)
+                      .style,
             children: <TextSpan>[
               TextSpan(
                       text: "$cityName",
@@ -168,7 +168,10 @@ class _CityInputFieldState extends State<CityInputField> {
   }
 
   void submitCityName(String cityName) {
-    final weatherBloc = BlocProvider.of<WeatherBloc>(context);
-    weatherBloc.dispatch(GetWeatherEvent(cityName));
+      if (cityName.length==0) {
+          return;
+      }
+      final weatherBloc = BlocProvider.of<WeatherBloc>(context);
+      weatherBloc.dispatch(GetWeatherEvent(cityName.trim()));
   }
 }
