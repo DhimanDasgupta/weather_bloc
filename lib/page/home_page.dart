@@ -4,6 +4,7 @@ import 'package:weather_bloc/bloc/weather_bloc.dart';
 import 'package:weather_bloc/bloc/weather_event.dart';
 import 'package:weather_bloc/bloc/weather_state.dart';
 import 'package:weather_bloc/model/Weather.dart';
+import 'package:weather_bloc/page/pref_page.dart';
 
 class HomePage extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
@@ -14,13 +15,22 @@ class HomePage extends StatelessWidget {
       key: _scaffoldKey,
       appBar: AppBar(
         title: Text('City Weather'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.settings),
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => PrefPage(),
+              ));
+            },
+          )
+        ],
       ),
       body: BlocProvider(
         builder: (context) => WeatherBloc(),
         child: WeatherPageChild(
           scaffoldKey: _scaffoldKey,
         ),
-        dispose: true,
       ),
     );
   }
