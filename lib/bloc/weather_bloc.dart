@@ -26,4 +26,10 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
           temperature: 10 + Random().nextInt(25) + Random().nextDouble());
     });
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+    print("Disposing WeatherBloc");
+  }
 }
